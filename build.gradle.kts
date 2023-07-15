@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization") version embeddedKotlinVersion
     id("fabric-loom")
     `maven-publish`
     java
@@ -11,11 +12,7 @@ group = property("maven_group")!!
 version = property("mod_version")!!
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
+    maven("https://maven.brokenfuse.me/releases")
 }
 
 dependencies {
@@ -25,6 +22,9 @@ dependencies {
 
     modImplementation("net.fabricmc:fabric-language-kotlin:${property("fabric_kotlin_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+//    modImplementation("org.teamvoided:voidlib:${property("voidlib_version")}")
 }
 
 tasks {

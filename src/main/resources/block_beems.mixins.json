@@ -1,12 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.teamvoided.modid.mixin",
+  "package": "com.theendercore.block_beems.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
-    "BlockMixin"
+    "BlockMixin",
+    "RedstoneOreBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

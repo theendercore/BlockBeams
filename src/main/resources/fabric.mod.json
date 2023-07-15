@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "block_beems",
   "version": "${version}",
 
-  "name": "ModId",
+  "name": "BlockBeems",
   "description": "Writen by end!",
   "authors": [
     "Ender"
@@ -14,19 +14,19 @@
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/block_beems/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "client": [
       {
         "adapter": "kotlin",
-        "value": "org.teamvoided.modid.ModIdKt::onInitialize"
+        "value": "com.theendercore.block_beems.BlockBeemsKt::onInitialize"
       }
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "block_beems.mixins.json"
   ],
 
   "depends": {

@@ -1,4 +1,4 @@
-package org.teamvoided.modid
+package com.theendercore.block_beems
 
 
 import net.minecraft.block.Block
@@ -12,30 +12,20 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 
-const val MODID = "modid"
+const val MODID = "block_beems"
 
 @JvmField
 val LOGGER: Logger = LoggerFactory.getLogger(MODID)
-
-@Suppress("unused")
-fun id(path: String): Identifier = Identifier(MODID, path)
-
-//val keyBinding = KeyBindingHelper.registerKeyBinding(
-//    KeyBinding(
-//        "key.examplemod.spook",  // The translation key of the keybinding's name
-//        InputUtil.Type.KEYSYM,  // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-//        GLFW.GLFW_KEY_R,  // The keycode of the key
-//        "category.examplemod.test" // The translation key of the keybinding's category.
-//    )
-//)
+fun id(path: String): Identifier = Identifier(path)
+fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
+fun config(): Config = Config.INSTANCE
 
 @Suppress("unused")
 fun onInitialize() {
-    LOGGER.info(MODID)
+    LOGGER.info("Entering the Matrix...")
+    config().load()
+    Keybinding.init()
 }
-
-fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
-fun mcId(path: String): Identifier = Identifier(path)
 
 fun beem(pos: BlockPos, color: Int) {
     for (i in 0 until 12) {
