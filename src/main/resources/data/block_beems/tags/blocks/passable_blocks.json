@@ -1,0 +1,46 @@
+{
+  "values": [
+    "air",
+    "water",
+    "pointed_dripstone",
+    "tripwire",
+    "lever",
+    "lightning_rod",
+    "slime_block",
+    "honey_block",
+    "lantern",
+    "soul_lantern",
+    "glow_lichen",
+    "cobweb",
+    "chain",
+    "iron_bars",
+    "conduit",
+    "end_rod",
+    "tripwire_hook",
+
+    "torch",
+    "wall_torch",
+    "soul_torch",
+    "soul_wall_torch",
+    "redstone_torch",
+    "redstone_wall_torch",
+
+    "#minecraft:leaves",
+    "#minecraft:all_signs",
+    "#minecraft:banners",
+    "#minecraft:buttons",
+    "#minecraft:cave_vines",
+    "#minecraft:candles",
+    "#minecraft:climbable",
+    "#minecraft:corals",
+    "#minecraft:flower_pots",
+    "#minecraft:fences",
+    "#minecraft:fence_gates",
+    "#minecraft:rails",
+
+    "#c:buds",
+    "#c:clusters",
+    "#c:glass_blocks",
+    "#c:glass_panes"
+  ]
+}

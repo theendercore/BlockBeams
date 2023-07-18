@@ -5,6 +5,8 @@ import net.minecraft.block.Block
 import net.minecraft.client.MinecraftClient
 import net.minecraft.particle.DustParticleEffect
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
@@ -19,6 +21,10 @@ val LOGGER: Logger = LoggerFactory.getLogger(MODID)
 fun id(path: String): Identifier = Identifier(path)
 fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
 fun config(): Config = Config.INSTANCE
+
+@JvmField
+val PASSABLE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("$MODID:passable_blocks"))
+
 
 @Suppress("unused")
 fun onInitialize() {
