@@ -2,6 +2,7 @@ package com.theendercore.block_beems
 
 
 import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
 import net.minecraft.particle.DustParticleEffect
 import net.minecraft.registry.Registries
@@ -10,6 +11,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
+import net.minecraft.world.World
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -28,7 +30,7 @@ val PASSABLE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("$MODID:passable_blocks")
 
 @Suppress("unused")
 fun onInitialize() {
-    LOGGER.info("Entering the Matrix...")
+    LOGGER.info("Entering the Blocktrix...")
     config().load()
     Keybinding.init()
 }
@@ -50,4 +52,33 @@ fun beem(pos: BlockPos, color: Int) {
         }
     }
 
+}
+
+fun canRender(world: World, pos: BlockPos): Boolean =
+    (isPassable(world, pos, 1) && isPassable(world, pos, 2) && isPassable(world, pos, 3))
+
+
+fun isPassable(world: World, pos: BlockPos, dist: Int): Boolean {
+    val c = config().config
+    val state = world.getBlockState(pos.up(dist))
+
+    return when (c.blockCheckType) {
+        BlockCheckType.SERVER_ONLY -> state.isIn(PASSABLE_BLOCKS)
+        BlockCheckType.CLIENT_ONLY -> clientOnlyCheck(state, c)
+        BlockCheckType.SERVER_THEN_CLIENT -> {
+            true
+        }
+    }
+
+}
+
+fun clientOnlyCheck(state: BlockState, c: ConfigData): Boolean {
+    var value = false
+    for (block in c.clientTag) {
+        value = block.startsWith("#") && state.isIn(TagKey.of(RegistryKeys.BLOCK, id(block.removePrefix("#"))))
+                ||
+                !block.startsWith("#") && getId(state.block) == id(block)
+        if (value) break
+    }
+    return value
 }
