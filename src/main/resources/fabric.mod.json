@@ -1,32 +1,32 @@
 {
   "schemaVersion": 1,
-  "id": "block_beems",
+  "id": "block_beams",
   "version": "${version}",
 
-  "name": "Block Beems",
-  "description": "A very simple mod that spawns a beem of colored particles above a block.",
+  "name": "Block Beams",
+  "description": "A very simple mod that spawns a beam of colored particles above a block.",
   "authors": [
     "Ender"
   ],
   "contact": {
     "homepage": "https://theendercore.github.io/",
-    "sources": "https://github.com/theendercore/BlockBeems"
+    "sources": "https://github.com/theendercore/BlockBeams"
   },
 
   "license": "MIT",
-  "icon": "assets/block_beems/icon.png",
+  "icon": "assets/block_beams/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "client": [
       {
         "adapter": "kotlin",
-        "value": "com.theendercore.block_beems.BlockBeemsKt::onInitialize"
+        "value": "com.theendercore.block_beams.BlockBeamsKt::onInitialize"
       }
     ]
   },
   "mixins": [
-    "block_beems.mixins.json"
+    "block_beams.mixins.json"
   ],
 
   "depends": {

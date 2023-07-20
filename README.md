@@ -1,9 +1,9 @@
-# BlockBeems
+# Block Beams
 
-A very simple mod that spawns a beem of colored particles above a block
+A very simple mod that spawns a beam of colored particles above a block
 ---
 
-A very simple mod that spawns a beem of colored particles above a block if the block has 3 block of air or other 
+A very simple mod that spawns a beam of colored particles above a block if the block has 3 block of air or other 
 "passable" blocks above it *(see config for more info)*. Which helps you spot the block better. I
 originally came up with this idea when I was mining for ores with my world eater. But with how big the 1.18 caves are
 this is going to be useful there as well. Plus it can also be used as an aesthetic feature, in case you want to have a
@@ -25,7 +25,7 @@ There are 2 types of config :
 
 <details>
     <summary>"Server" side</summary>
-Block Beems is not supported on the server but there is a server side type config.
+Block Beams is not supported on the server but there is a server side type config.
 
 
 The only think you can configure server side is the block pass list. It is configured by a vanilla tag, so you just
@@ -35,10 +35,10 @@ mod on the server. *(Only thing to add is that the clients can override if they 
 If you wish to:
 
 - make your own tag just
-  go [here for the example pack](https://github.com/theendercore/BlockBeems/tree/1.19/examples/exmple_pack) and then
+  go [here for the example pack](https://github.com/theendercore/BlockBeams/tree/1.19/examples/exmple_pack) and then
   just reconfigure it as you like.
-- use the [default pack](https://github.com/theendercore/BlockBeems/raw/1.19/examples/DefaultPack.zip)
-- disable to mod [empty pack](https://github.com/theendercore/BlockBeems/raw/1.19/examples/EmptyPack.zip)
+- use the [default pack](https://github.com/theendercore/BlockBeams/raw/1.19/examples/DefaultPack.zip)
+- disable to mod [empty pack](https://github.com/theendercore/BlockBeams/raw/1.19/examples/EmptyPack.zip)
 
 </details>
 
@@ -47,7 +47,7 @@ If you wish to:
 
 As stated in server config most configs are on the client:
 
-- "blockBeems" is the list of blocks that will emit the particles and there color. It has a very simple format
+- "blockBeams" is the list of blocks that will emit the particles and there color. It has a very simple format
   of `["namespace:block": hex color]`
 - "blockCheckType" is the way the mod check for what blocks to pass through
     - SERVER_ONLY - Gets the tag from the server and checks based on that, if the server has no tag then the mod is

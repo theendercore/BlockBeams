@@ -1,4 +1,4 @@
-package com.theendercore.block_beems
+package com.theendercore.block_beams
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
@@ -10,10 +10,10 @@ import org.lwjgl.glfw.GLFW
 object Keybinding {
     private val configKey: KeyBinding = KeyBindingHelper.registerKeyBinding(
         KeyBinding(
-            "key.block_beems.config",
+            "key.block_beams.config",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_UNKNOWN,
-            "category.block_beems.generic"
+            "category.block_beams.generic"
         )
     )
 

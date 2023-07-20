@@ -1,4 +1,4 @@
-package com.theendercore.block_beems
+package com.theendercore.block_beams
 
 
 import net.minecraft.block.Block
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory
 import java.awt.Color
 
 
-const val MODID = "block_beems"
+const val MODID = "block_beams"
 
 @JvmField
 val LOGGER: Logger = LoggerFactory.getLogger(MODID)
@@ -36,7 +36,7 @@ fun onInitialize() {
     Keybinding.init()
 }
 
-fun beem(pos: BlockPos, color: String) {
+fun beam(pos: BlockPos, color: String) {
     for (i in 0 until 12) {
         try {
             MinecraftClient.getInstance().particleManager.addParticle(

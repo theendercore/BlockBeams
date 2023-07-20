@@ -1,4 +1,4 @@
-package com.theendercore.block_beems
+package com.theendercore.block_beams
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -153,7 +153,7 @@ class Config {
 data class ConfigData(
     val version: Int,
     val comment: String,
-    val blockBeems: Map<String, String>,
+    val blockBeams: Map<String, String>,
     val commentTwo: String,
     val blockCheckType: BlockCheckType,
     val commentThree: String,
