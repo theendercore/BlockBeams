@@ -3,14 +3,14 @@
   "id": "block_beems",
   "version": "${version}",
 
-  "name": "BlockBeems",
-  "description": "Writen by end!",
+  "name": "Block Beems",
+  "description": "A very simple mod that spawns a beem of colored particles above a block.",
   "authors": [
     "Ender"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://theendercore.github.io/",
+    "sources": "https://github.com/theendercore/BlockBeems"
   },
 
   "license": "MIT",
@@ -37,6 +37,6 @@
     "fabric-language-kotlin": ">=1.9.0+kotlin.1.8.0"
   },
   "suggests": {
-    "another-mod": "*"
+    "modmenu": "*"
   }
 }
