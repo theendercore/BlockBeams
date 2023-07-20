@@ -17,29 +17,29 @@ class Config {
         1,
         "A List of Blocks and the beam colors as Integers",
         mapOf(
-            Pair("nether_quartz_ore", -1),
-            Pair("coal_ore", 0),
-            Pair("deepslate_coal_ore", 0),
-            Pair("copper_ore", 13725018),
-            Pair("deepslate_copper_ore", 13725018),
-            Pair("lapis_ore", 4352721),
-            Pair("deepslate_lapis_ore", 4352721),
-            Pair("iron_ore", 14925994),
-            Pair("deepslate_iron_ore", 14925994),
-            Pair("redstone_ore", 15866651),
-            Pair("deepslate_redstone_ore", 15866651),
-            Pair("gold_ore", 15457862),
-            Pair("deepslate_gold_ore", 15457862),
-            Pair("nether_gold_ore", 15457862),
-            Pair("emerald_ore", 1423167),
-            Pair("deepslate_emerald_ore", 1423167),
-            Pair("minecraft:diamond_ore", 1884871),
-            Pair("minecraft:deepslate_diamond_ore", 1884871)
+            Pair("nether_quartz_ore", "#ffffff"),
+            Pair("coal_ore", "#000000"),
+            Pair("deepslate_coal_ore", "#000000"),
+            Pair("copper_ore", "#d16d5a"),
+            Pair("deepslate_copper_ore", "#d16d5a"),
+            Pair("lapis_ore", "#426ad1"),
+            Pair("deepslate_lapis_ore", "#426ad1"),
+            Pair("iron_ore", "#e3c0aa"),
+            Pair("deepslate_iron_ore", "#e3c0aa"),
+            Pair("redstone_ore", "#f21b1b"),
+            Pair("deepslate_redstone_ore", "#f21b1b"),
+            Pair("gold_ore", "#ebde46"),
+            Pair("deepslate_gold_ore", "#ebde46"),
+            Pair("nether_gold_ore", "#ebde46"),
+            Pair("emerald_ore", "#15b73f"),
+            Pair("deepslate_emerald_ore", "#15b73f"),
+            Pair("minecraft:diamond_ore", "#1cc2c7"),
+            Pair("minecraft:deepslate_diamond_ore", "#1cc2c7")
         ),
         "The way the mod check what blocks can be passed through." +
                 " [SERVER_ONLY] - (Block list is gotten from the server only, none cheaty option), " +
-                "[CLIENT_ONLY] - (Block list is gotten from the client only, the 'cheaty' option), " +
-                "[SERVER_THEN_CLIENT] - (Block list is gotten from the server and if that fails then client, the  compromise option)",
+                "[CLIENT_ONLY] - (Block list is gotten from the client only, the 'cheaty' option), ",
+//                "[SERVER_THEN_CLIENT] - (Block list is gotten from the server and if that fails then client, the  compromise option)",
         BlockCheckType.SERVER_ONLY,
         "The list of blocks that be passed through on the client",
         listOf(
@@ -153,10 +153,10 @@ class Config {
 data class ConfigData(
     val version: Int,
     val comment: String,
-    val blockBeems: Map<String, Int>,
-    val comment2: String,
+    val blockBeems: Map<String, String>,
+    val commentTwo: String,
     val blockCheckType: BlockCheckType,
-    val comment3: String,
+    val commentThree: String,
     val clientTag: List<String>,
 )
 

@@ -14,6 +14,7 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.awt.Color
 
 
 const val MODID = "block_beems"
@@ -25,7 +26,7 @@ fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
 fun config(): Config = Config.INSTANCE
 
 @JvmField
-val PASSABLE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("$MODID:passable_blocks"))
+val PASSABLE_BLOCKS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("$MODID:passable_blocks"))
 
 
 @Suppress("unused")
@@ -35,11 +36,11 @@ fun onInitialize() {
     Keybinding.init()
 }
 
-fun beem(pos: BlockPos, color: Int) {
+fun beem(pos: BlockPos, color: String) {
     for (i in 0 until 12) {
         try {
             MinecraftClient.getInstance().particleManager.addParticle(
-                DustParticleEffect(Vec3d.unpackRgb(color).toVector3f(), 1f),
+                DustParticleEffect(Vec3d.unpackRgb(Color.decode(color).rgb).toVector3f(), 1f),
                 pos.x.floorDiv(1) + 0.5,
                 (pos.y + 1.2) + (0.25 * i),
                 pos.z.floorDiv(1) + 0.5,
@@ -65,9 +66,7 @@ fun isPassable(world: World, pos: BlockPos, dist: Int): Boolean {
     return when (c.blockCheckType) {
         BlockCheckType.SERVER_ONLY -> state.isIn(PASSABLE_BLOCKS)
         BlockCheckType.CLIENT_ONLY -> clientOnlyCheck(state, c)
-        BlockCheckType.SERVER_THEN_CLIENT -> {
-            true
-        }
+        BlockCheckType.SERVER_THEN_CLIENT -> state.isIn(PASSABLE_BLOCKS)
     }
 
 }
