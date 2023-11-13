@@ -11,7 +11,7 @@ water fountain you can make a not useful block have blue particles and boom you 
 
 #### Warning
 
-Some severer owners / admins may see this mod as unfair. So be respectful and ask the server owners / admins if you can
+Some server owners / admins may see this mod as unfair. So be respectful and ask the server owners / admins if you can
 you this mod. Also mention the "server side" config of the mod. *(Se bellow)*
 
 ### Dependencies
