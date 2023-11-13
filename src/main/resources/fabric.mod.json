@@ -21,7 +21,7 @@
     "client": [
       {
         "adapter": "kotlin",
-        "value": "com.theendercore.block_beams.BlockBeamsKt::onInitialize"
+        "value": "com.theendercore.block_beams.BlockBeams::onInitialize"
       }
     ]
   },

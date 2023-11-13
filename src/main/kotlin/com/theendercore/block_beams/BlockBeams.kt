@@ -16,68 +16,69 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.awt.Color
 
+object BlockBeams {
+    const val MODID = "block_beams"
 
-const val MODID = "block_beams"
+    @JvmField
+    val LOGGER: Logger = LoggerFactory.getLogger(MODID)
+    fun id(path: String): Identifier = Identifier(path)
+    fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
+    fun config(): Config = Config.INSTANCE
 
-@JvmField
-val LOGGER: Logger = LoggerFactory.getLogger(MODID)
-fun id(path: String): Identifier = Identifier(path)
-fun getId(block: Block): Identifier = Registries.BLOCK.getId(block)
-fun config(): Config = Config.INSTANCE
-
-@JvmField
-val PASSABLE_BLOCKS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("$MODID:passable_blocks"))
+    @JvmField
+    val PASSABLE_BLOCKS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("$MODID:passable_blocks"))
 
 
-@Suppress("unused")
-fun onInitialize() {
-    LOGGER.info("Entering the Blocktrix...")
-    config().load()
-    Keybinding.init()
-}
+    @Suppress("unused")
+    fun onInitialize() {
+        LOGGER.info("Entering the Blocktrix...")
+        config().load()
+        Keybinding.init()
+    }
 
-fun beam(pos: BlockPos, color: String) {
-    for (i in 0 until 12) {
-        try {
-            MinecraftClient.getInstance().particleManager.addParticle(
-                DustParticleEffect(Vec3d.unpackRgb(Color.decode(color).rgb).toVector3f(), 1f),
-                pos.x.floorDiv(1) + 0.5,
-                (pos.y + 1.2) + (0.25 * i),
-                pos.z.floorDiv(1) + 0.5,
-                0.0,
-                10.0,
-                0.0
-            )
-        } catch (throwable: Throwable) {
-            LOGGER.warn("Could not spawn particle effect")
+    fun beam(pos: BlockPos, color: String) {
+        for (i in 0 until 12) {
+            try {
+                MinecraftClient.getInstance().particleManager.addParticle(
+                    DustParticleEffect(Vec3d.unpackRgb(Color.decode(color).rgb).toVector3f(), 1f),
+                    pos.x.floorDiv(1) + 0.5,
+                    (pos.y + 1.2) + (0.25 * i),
+                    pos.z.floorDiv(1) + 0.5,
+                    0.0,
+                    10.0,
+                    0.0
+                )
+            } catch (throwable: Throwable) {
+                LOGGER.warn("Could not spawn particle effect")
+            }
         }
+
     }
 
-}
-
-fun canRender(world: World, pos: BlockPos): Boolean =
-    (isPassable(world, pos, 1) && isPassable(world, pos, 2) && isPassable(world, pos, 3))
+    fun canRender(world: World, pos: BlockPos): Boolean =
+        (isPassable(world, pos, 1) && isPassable(world, pos, 2) && isPassable(world, pos, 3))
 
 
-fun isPassable(world: World, pos: BlockPos, dist: Int): Boolean {
-    val c = config().config
-    val state = world.getBlockState(pos.up(dist))
+    fun isPassable(world: World, pos: BlockPos, dist: Int): Boolean {
+        val c = config().config
+        val state = world.getBlockState(pos.up(dist))
 
-    return when (c.blockCheckType) {
-        BlockCheckType.SERVER_ONLY -> state.isIn(PASSABLE_BLOCKS)
-        BlockCheckType.CLIENT_ONLY -> clientOnlyCheck(state, c)
-        BlockCheckType.SERVER_THEN_CLIENT -> state.isIn(PASSABLE_BLOCKS)
+        return when (c.blockCheckType) {
+            BlockCheckType.SERVER_ONLY -> state.isIn(PASSABLE_BLOCKS)
+            BlockCheckType.CLIENT_ONLY -> clientOnlyCheck(state, c)
+            BlockCheckType.SERVER_THEN_CLIENT -> state.isIn(PASSABLE_BLOCKS)
+        }
+
     }
 
-}
-
-fun clientOnlyCheck(state: BlockState, c: ConfigData): Boolean {
-    var value = false
-    for (block in c.clientTag) {
-        value = block.startsWith("#") && state.isIn(TagKey.of(RegistryKeys.BLOCK, id(block.removePrefix("#"))))
-                ||
-                !block.startsWith("#") && getId(state.block) == id(block)
-        if (value) break
+    fun clientOnlyCheck(state: BlockState, c: ConfigData): Boolean {
+        var value = false
+        for (block in c.clientTag) {
+            value = block.startsWith("#") && state.isIn(TagKey.of(RegistryKeys.BLOCK, id(block.removePrefix("#"))))
+                    ||
+                    !block.startsWith("#") && getId(state.block) == id(block)
+            if (value) break
+        }
+        return value
     }
-    return value
 }

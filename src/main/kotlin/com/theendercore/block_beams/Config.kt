@@ -1,5 +1,7 @@
 package com.theendercore.block_beams
 
+import com.theendercore.block_beams.BlockBeams.LOGGER
+import com.theendercore.block_beams.BlockBeams.MODID
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -11,8 +13,6 @@ import java.io.FileWriter
 
 
 class Config {
-
-
     private val defaultConfig = ConfigData(
         1,
         "A List of Blocks and the beam colors as Integers",
