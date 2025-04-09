@@ -54,18 +54,18 @@ tasks {
     }
 }
 
-/*publishScript {
+publishScript {
     releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
     publication(modSettings.modId(), false)
     publishSources(true)
-}*/
+}
 
 uploadConfig {
-//    debugMode = true
+    debugMode = false
     modrinthId = modrinth_id
     curseId = curse_id
 
-    changeLog = "- 21 update"
+    changeLog = File("changelog.md").readText()
 
     // FabricApi
     modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
