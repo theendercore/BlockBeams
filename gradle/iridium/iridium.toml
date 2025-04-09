@@ -1,13 +1,15 @@
 projectTitle = "Block Beams"
 modId = "block_beams"
+modVersion = "1.2.1"
+group = "com.theendercore"
 githubRepo = "theendercore/BlockBeams"
 discordServerInviteId = "KZ5Q364hEg"
 authors = [ "TheEnderCore" ]
-majorMinecraftVersion = "1.21"
+majorMinecraftVersion = "1.21.4"
 minecraftVersion = "1.21.4"
 fabricLoaderVersion = "0.16.13"
 fabricApiVersion = "0.119.2+1.21.4"
-fabricLangKotlinVersion = "1.11.0+kotlin.2.0.0"
+fabricLangKotlinVersion = "1.13.2+kotlin.2.1.20"
 license = "MIT"
 modules = [ ]
 modDescription = "A very simple mod that spawns a beam of colored particles above a block."

@@ -1,7 +1,7 @@
 [versions]
-kotlin = "2.0.0"
-fabric-loom = "1.9-SNAPSHOT"
-iridium = "3.3.0"
+kotlin = "2.1.20"
+fabric-loom = "1.10-SNAPSHOT"
+iridium = "3.4.0"
 
 modmenu = "13.0.3"
 
