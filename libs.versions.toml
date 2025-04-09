@@ -3,7 +3,7 @@ kotlin = "2.0.0"
 fabric-loom = "1.9-SNAPSHOT"
 iridium = "3.3.0"
 
-modmenu = "11.0.3"
+modmenu = "13.0.3"
 
 [libraries]
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }

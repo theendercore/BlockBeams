@@ -4,23 +4,22 @@ import com.theendercore.block_beams.BlockBeams.getId
 import com.theendercore.block_beams.BlockBeams.id
 import com.theendercore.block_beams.BlockBeams.log
 import com.theendercore.block_beams.BlockBeams.parseId
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.client.MinecraftClient
-import net.minecraft.particle.DustParticleEffect
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Vec3d
-import net.minecraft.world.World
+import net.minecraft.client.Minecraft
+import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.DustParticleOptions
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import java.awt.Color
 
 object BeamControl {
     private val CLIENT_CACHE = mutableMapOf<Block, Boolean>()
-    private val PASSABLE_BLOCKS: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id("passable_blocks"))
+    private val PASSABLE_BLOCKS: TagKey<Block> = TagKey.create(Registries.BLOCK, id("passable_blocks"))
 
     @JvmStatic
-    fun spawn(state: BlockState, world: World, pos: BlockPos) {
+    fun spawn(state: BlockState, world: Level, pos: BlockPos) {
         val color = Config.parsedMap[getId(state.block)] ?: return
         for (i in 1..3) {
             if (!canPassable(world, pos, i)) return
@@ -30,8 +29,8 @@ object BeamControl {
 
     private fun particles(pos: BlockPos, color: String) = repeat(12) { i ->
         try {
-            MinecraftClient.getInstance().particleManager.addParticle(
-                DustParticleEffect(Vec3d.unpackRgb(Color.decode(color).rgb).toVector3f(), 1f),
+            Minecraft.getInstance().particleEngine.createParticle(
+                DustParticleOptions(Color.decode(color).rgb, 1f),
                 pos.x.floorDiv(1) + 0.5,
                 (pos.y + 1.2) + (0.25 * i),
                 pos.z.floorDiv(1) + 0.5,
@@ -42,11 +41,11 @@ object BeamControl {
         }
     }
 
-    private fun canPassable(world: World, pos: BlockPos, dist: Int): Boolean {
-        val state = world.getBlockState(pos.up(dist))
+    private fun canPassable(world: Level, pos: BlockPos, dist: Int): Boolean {
+        val state = world.getBlockState(pos.above(dist))
         return when (Config.data.blockCheckType) {
             BlockCheckType.CLIENT_ONLY -> clientOnlyCheck(state, Config.data)
-            BlockCheckType.SERVER_ONLY -> state.isIn(PASSABLE_BLOCKS)
+            BlockCheckType.SERVER_ONLY -> state.`is`(PASSABLE_BLOCKS)
         }
     }
 
@@ -64,7 +63,7 @@ object BeamControl {
 
     private fun checkBlock(state: BlockState, id: String): Boolean {
         return if (id.startsWith("#"))
-            state.isIn(TagKey.of(RegistryKeys.BLOCK, parseId(id.removePrefix("#"))))
+            state.`is`(TagKey.create(Registries.BLOCK, parseId(id.removePrefix("#"))))
         else getId(state.block) == parseId(id)
     }
 }

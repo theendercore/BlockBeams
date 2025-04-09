@@ -1,3 +1,1 @@
-- Update fabric loader and api versions
-- Change the mixin point so now all blocks can have beams
-- Optimized all checks in mod (Should make the mod cause less lag)
+- 1.21.4 update
