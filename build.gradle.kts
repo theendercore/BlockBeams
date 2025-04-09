@@ -28,12 +28,10 @@ modSettings {
     entrypoint("client", "com.theendercore.block_beams.BlockBeams::onInitialize")
     mixinFile("${modId()}.mixins.json")
 
-//    accessWidener("$modid.accesswidener")
 }
 
 dependencies {
     modImplementation(fileTree("libs"))
-    modImplementation(libs.farrow)
     modImplementation(libs.modmenu)
 }
 
