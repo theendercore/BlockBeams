@@ -3,12 +3,7 @@
   "minVersion": "0.8",
   "package": "com.theendercore.block_beams.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-  ],
-  "client": [
-    "BlockMixin",
-    "RandomDisplayTickOverrideMixin"
-  ],
+  "client": [ "ClientWorldMixin" ],
   "injectors": {
     "defaultRequire": 1
   }

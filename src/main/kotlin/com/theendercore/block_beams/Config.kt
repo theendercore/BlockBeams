@@ -2,6 +2,7 @@ package com.theendercore.block_beams
 
 import com.theendercore.block_beams.BlockBeams.MODID
 import com.theendercore.block_beams.BlockBeams.log
+import com.theendercore.block_beams.BlockBeams.parseId
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -12,34 +13,29 @@ import java.io.FileReader
 import java.io.FileWriter
 
 
-class Config {
+object Config {
     private val configFile: File = FabricLoader.getInstance().configDir.resolve("$MODID.json").toFile()
-    var config: ConfigData = ConfigData()
+    var data: ConfigData = ConfigData()
+    var parsedMap = data.blockBeams.map { parseId(it.key) to it.value }.toMap()
 
     @OptIn(ExperimentalSerializationApi::class)
     private val json = Json { prettyPrint = true; prettyPrintIndent = "\t" }
 
-    fun load() {
-        try {
-            val stringData = FileReader(configFile).use { it.readText() }
-            config = json.decodeFromString(stringData)
-        } catch (e: Exception) {
-            log.info("No config Found! Or config is Broked! Making a new one.")
-            log.warn(e.toString())
-            save(ConfigData())
-        }
+    fun load() = try {
+        val stringData = FileReader(configFile).use { it.readText() }
+        data = json.decodeFromString(stringData)
+    } catch (e: Exception) {
+        log.info("No config Found, or broken! Making a new one.")
+        log.warn(e.toString())
+        save(ConfigData())
+    } finally {
+        parsedMap = data.blockBeams.map { parseId(it.key) to it.value }.toMap()
     }
 
-    private fun save(config: ConfigData) {
-        try {
-            FileWriter(configFile).use { it.write(json.encodeToString(config)) }
-        } catch (e: Exception) {
-            log.error("Could not save config!!!")
-        }
-    }
-
-    companion object {
-        val INSTANCE = Config()
+    private fun save(config: ConfigData) = try {
+        FileWriter(configFile).use { it.write(json.encodeToString(config)) }
+    } catch (e: Exception) {
+        log.error("Could not save config!!!")
     }
 }
 
@@ -80,7 +76,6 @@ data class ConfigData(
         "The way the mod check what blocks can be passed through." +
                 " [SERVER_ONLY] - (Block list is gotten from the server only, none cheaty option), " +
                 "[CLIENT_ONLY] - (Block list is gotten from the client only, the 'cheaty' option), ",
-//                "[SERVER_THEN_CLIENT] - (Block list is gotten from the server and if that fails then client, the  compromise option)",
         BlockCheckType.SERVER_ONLY,
         "The list of blocks that be passed through on the client",
         listOf(
@@ -169,6 +164,5 @@ data class ConfigData(
 
 enum class BlockCheckType {
     SERVER_ONLY,
-    CLIENT_ONLY,
-    SERVER_THEN_CLIENT
+    CLIENT_ONLY
 }
