@@ -14,9 +14,8 @@ import org.slf4j.LoggerFactory
 object BlockBeams {
     const val MODID = "block_beams"
     val log: Logger = LoggerFactory.getLogger(MODID)
-    private val configKey = registerKeyBinding(
-        KeyMapping("key.$MODID.config", GLFW.GLFW_KEY_UNKNOWN, "category.$MODID.generic")
-    )
+    val KEY_CATEGORY: KeyMapping.Category = KeyMapping.Category.register(id("generic"))
+    private val configKey = registerKeyBinding(KeyMapping("key.$MODID.config", GLFW.GLFW_KEY_UNKNOWN, KEY_CATEGORY))
 
     @Suppress("unused")
     fun onInitialize() {

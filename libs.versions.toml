@@ -1,9 +1,9 @@
 [versions]
-kotlin = "2.1.20"
-fabric-loom = "1.10-SNAPSHOT"
-iridium = "3.4.0"
+kotlin = "2.2.20"
+fabric-loom = "1.11-SNAPSHOT"
+iridium = "3.5.0"
 
-modmenu = "13.0.3"
+modmenu = "15.0.0"
 
 [libraries]
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }

@@ -24,7 +24,7 @@ modSettings {
 
 dependencies {
     modImplementation(fileTree("libs"))
-    modImplementation(libs.modmenu)
+//    modImplementation(libs.modmenu)
 }
 
 sourceSets["main"].resources.srcDir("src/main/generated")

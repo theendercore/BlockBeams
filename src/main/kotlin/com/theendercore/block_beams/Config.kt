@@ -5,7 +5,6 @@ import com.theendercore.block_beams.BlockBeams.log
 import com.theendercore.block_beams.BlockBeams.parseId
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import net.fabricmc.loader.api.FabricLoader
 import java.io.File
@@ -35,7 +34,7 @@ object Config {
     private fun save(config: ConfigData) = try {
         FileWriter(configFile).use { it.write(json.encodeToString(config)) }
     } catch (e: Exception) {
-        log.error("Could not save config!!!")
+        log.error("Could not save config!", e)
     }
 }
 
@@ -87,11 +86,8 @@ data class ConfigData(
             "lightning_rod",
             "slime_block",
             "honey_block",
-            "lantern",
-            "soul_lantern",
             "glow_lichen",
             "cobweb",
-            "chain",
             "iron_bars",
             "conduit",
             "end_rod",
@@ -145,6 +141,10 @@ data class ConfigData(
             "purple_stained_glass_pane",
             "pink_stained_glass_pane",
 
+            "#lanterns",
+            "#chains",
+            "#bars",
+            "#wooden_shelves",
             "#minecraft:leaves",
             "#minecraft:all_signs",
             "#minecraft:banners",
