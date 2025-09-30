@@ -5,10 +5,10 @@ group = "com.theendercore"
 githubRepo = "theendercore/BlockBeams"
 discordServerInviteId = "KZ5Q364hEg"
 authors = [ "TheEnderCore" ]
-majorMinecraftVersion = ">=1.21.9-rc.1"
-minecraftVersion = "1.21.9-rc1"
+majorMinecraftVersion = ">=1.21.9"
+minecraftVersion = "1.21.9"
 fabricLoaderVersion = "0.17.2"
-fabricApiVersion = "0.133.13+1.21.9"
+fabricApiVersion = "0.133.14+1.21.9"
 fabricLangKotlinVersion = "1.13.2+kotlin.2.1.20"
 license = "MIT"
 modules = [ ]
@@ -27,4 +27,4 @@ disableKotlin = false
     # MOJYARN: Yarn layered on top of the official Mojang mappings
     # CUSTOM: Custom mapping jar. Uses mappings version as file location
     type = "MOJANG"
-    version = "1.21.4"
+    version = "1.21.9"
