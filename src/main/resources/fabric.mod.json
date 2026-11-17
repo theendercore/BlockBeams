@@ -24,7 +24,8 @@
     "minecraft": "${version_range}",
     "fabricloader": "*",
     "fabric-api": "*",
-    "fabric-language-kotlin": ">=${fabric_kotlin}"
+    "fabric-language-kotlin": ">=${fabric_kotlin}",
+    "fzzy_config": ">=${fzzy_config}"
   },
   "contact": {
     "homepage": "https://github.com/${github_repo}",

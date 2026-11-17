@@ -1,1 +1,3 @@
-- 1.21.9+ update
+- 26.x update
+- Mod now uses Fzzy Config (Yippee ui!!!)
+- Optimized the mod (You don't want to know it was bad)

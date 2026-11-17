@@ -9,7 +9,7 @@
     fabric_loader = "0.20.1"
     fabric_api = "0.155.3+26.1.2"
     fabric_kotlin = "1.14.2+kotlin.2.4.21"
-    # fzzy_config = "0.7.7+1.21"
+    fzzy_config = "0.7.7+26.1"
     # Runtime
     modmenu = "18.0.2"
 
@@ -19,13 +19,12 @@
     fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
     fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
     fabric_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_kotlin" }
-    # fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy_config" }
+    fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy_config" }
     # Runtime
     modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
 [plugins]
     kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-    kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
     fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric_loom" }
     iridium = { id = "org.teamvoided.iridium", version.ref = "iridium" }
     iridium-publish = { id = "iridium.project.publish-script", version.ref = "iridium" }

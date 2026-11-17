@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.iridium)
     alias(libs.plugins.iridium.publish)
     alias(libs.plugins.iridium.upload)
@@ -36,6 +35,7 @@ dependencies {
     implementation(libs.fabric.loader)
     implementation(libs.fabric.api)
     implementation(libs.fabric.kotlin)
+    implementation(libs.fzzy.config)
     // Runtime
     implementation(libs.modmenu)
 }
@@ -134,10 +134,11 @@ uploadScript {
     changelog = projectDir.resolve("changelog.md").readText()
 
     version += libs.versions.minecraft.get()
+    version += listOf("26.1", "26.1.1", "26.2", "26.3")
     versionName = "${iridium.modName()} ${iridium.modVersion}"
     jarTask = tasks.jar.get()
 
     dependency("P7dR8mSH", "fabric-api")
     dependency("Ha28R6CL", "fabric-language-kotlin")
-//    dependency("hYykXjDp", "fzzy-config")
+    dependency("hYykXjDp", "fzzy-config")
 }

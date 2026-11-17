@@ -1,30 +1,32 @@
 package com.theendercore.block_beams
 
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper.registerKeyBinding
-import net.minecraft.client.KeyMapping
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceLocation
+import me.fzzyhmstrs.fzzy_config.api.ConfigApi
+import me.fzzyhmstrs.fzzy_config.api.RegisterType
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
+import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
-import org.lwjgl.glfw.GLFW
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 object BlockBeams {
+
     const val MODID = "block_beams"
+
     val log: Logger = LoggerFactory.getLogger(MODID)
-    val KEY_CATEGORY: KeyMapping.Category = KeyMapping.Category.register(id("generic"))
-    private val configKey = registerKeyBinding(KeyMapping("key.$MODID.config", GLFW.GLFW_KEY_UNKNOWN, KEY_CATEGORY))
+
+    var config = ConfigApi.registerAndLoadConfig(::BlockBeamsConfig, RegisterType.CLIENT)
+
+    val PASSABLE_BLOCKS: TagKey<Block> = TagKey.create(Registries.BLOCK, id("passable_blocks"))
 
     @Suppress("unused")
     fun onInitialize() {
         log.info("Entering the Blocktrix...")
-        Config.load()
-        ClientTickEvents.END_CLIENT_TICK.register { if (configKey.consumeClick()) Config.load() }
+        BlockBeamsConfig.staticReload()
     }
 
-    fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MODID, path)
-    fun parseId(path: String): ResourceLocation = ResourceLocation.parse(path)
-    fun getId(block: Block): ResourceLocation = BuiltInRegistries.BLOCK.getKey(block)
+    fun id(path: String): Identifier = Identifier.fromNamespaceAndPath(MODID, path)
+    fun parseId(path: String): Identifier = Identifier.parse(path)
+
 }
