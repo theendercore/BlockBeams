@@ -1,0 +1,10 @@
+mod_name = "Block Beams"
+mod_id = "block_beams"
+mod_group = "com.theendercore"
+mod_version = "1.3.0+26.1"
+mod_description = "A very simple mod that spawns a beam of colored particles above a block."
+github_repo = "theendercore/BlockBeams"
+discord_invite = "https://discord.gg/KZ5Q364hEg"
+authors = [ "TheEnderCore" ]
+license = "MIT"
+version_range = ">=26.1 <27.1"

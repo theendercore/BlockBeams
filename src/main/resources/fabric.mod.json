@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [ "${authors}" ],
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "com.theendercore.block_beams.BlockBeams::onInitialize"
+      }
+    ]
+  },
+  "mixins": [
+    {
+      "config": "block_beams.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "java": ">=${java}",
+    "minecraft": "${version_range}",
+    "fabricloader": "*",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=${fabric_kotlin}"
+  },
+  "contact": {
+    "homepage": "https://github.com/${github_repo}",
+    "issues": "https://github.com/${github_repo}/issues",
+    "sources": "https://github.com/${github_repo}",
+    "discord": "${discord_invite}"
+  },
+  "license": "${license}",
+  "icon": "assets/block_beams/icon.png"
+}

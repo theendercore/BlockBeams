@@ -1,68 +1,143 @@
+@file:Suppress("PropertyName", "VariableNaming")
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    alias(libs.plugins.fabric.loom)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.iridium)
     alias(libs.plugins.iridium.publish)
     alias(libs.plugins.iridium.upload)
+    alias(libs.plugins.fabric.loom)
 }
 
 repositories {
-    maven("https://teamvoided.org/releases")
-    maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
+    maven("https://maven.fabricmc.net/")
+    maven("https://maven.fzzyhmstrs.me/") { name = "FzzyMaven"; content { includeGroup("me.fzzyhmstrs") } }
+    maven("https://maven.terraformersmc.com/") { // ModMenu, EMI
+        name = "Terraformers"
+        content {
+            includeGroup("com.terraformersmc")
+            includeGroup("dev.emi")
+        }
+    }
+    maven("https://api.modrinth.com/maven") { content { includeGroup("maven.modrinth") } }
+    mavenLocal()
     mavenCentral()
-}
-
-modSettings {
-    entrypoint("client", "com.theendercore.block_beams.BlockBeams::onInitialize")
-    mixinFile("${modId()}.mixins.json")
-
+    maven("https://teamvoided.org/releases") { content { includeGroup("org.teamvoided") } }
+    maven("https://teamvoided.org/snapshots") { content { includeGroup("org.teamvoided") } }
 }
 
 dependencies {
-    modImplementation(fileTree("libs"))
-//    modImplementation(libs.modmenu)
+    implementation(fileTree("libs"))
+    minecraft(libs.minecraft)
+    // Dependencies
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
+    implementation(libs.fabric.kotlin)
+    // Runtime
+    implementation(libs.modmenu)
 }
 
-sourceSets["main"].resources.srcDir("src/main/generated")
+val username = "vDev"
+val uuid = iridium.fetchUUID(username) // Dev & vDev will always be null
 
-tasks {
-    val targetJavaVersion = 21
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
-        options.release.set(targetJavaVersion)
+loom {
+//    splitEnvironmentSourceSets()
+
+    mods {
+        register(iridium.modId) {
+            sourceSet(sourceSets.main.get())
+//            sourceSet(sourceSets.getByName("client"))
+        }
     }
 
-    withType<KotlinCompile> {
-        compilerOptions.jvmTarget = JvmTarget.JVM_21
+    runs {
+        named("client") {
+            runDirectory = File("run")
+            programArguments.addAll("--username", username)
+            uuid?.let { programArguments.addAll("--uuid", it) }
+        }
+
+        create("randomClient") {
+            client()
+            runDirectory = File("run")
+        }
+
+        create("TestWorld") {
+            client()
+            runDirectory = File("run")
+            programArguments.addAll("--quickPlaySingleplayer", "testinfg", "--username", username)
+            uuid?.let { programArguments.addAll("--uuid", it) }
+        }
+
+        forEach {
+            it.generateRunConfig = true
+            it.preferGradleTask = true
+            it.jvmArguments.addAll(
+                // If enabled this you can hotswap basally anything
+                // Requires a JetBrains runtime!
+                "-XX:+AllowEnhancedClassRedefinition",
+                // If enabled this you can hotswap mixins
+                // Requires you to add MIXIN_PATH to your .env file
+                // Here is how to find the path: https://docs.fabricmc.net/develop/getting-started/intellij-idea/launching-the-game#1-locate-the-mixin-library-jar
+//                "-javaagent:${System.getProperty("MIXIN_PATH")}"
+            )
+        }
+    }
+}
+
+
+tasks {
+    val javaVersion = libs.versions.java.get()
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+        options.release.set(javaVersion.toInt())
+    }
+
+    withType<KotlinCompile>().all {
+        compilerOptions.jvmTarget = JvmTarget.fromTarget(javaVersion)
     }
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(javaVersion).toString()))
         withSourcesJar()
+    }
+
+    sourceSets.forEach { set ->
+        named<ProcessResources>(set.processResourcesTaskName) {
+            val expandProps = iridium.props.toMutableMap()
+            iridium.appendLibsVersionProps(expandProps, projectDir.resolve("libs.versions.toml"))
+            filesMatching(
+                listOf("pack.mcmeta", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml")
+            ) {
+                expand(expandProps)
+            }
+            inputs.properties(expandProps)
+        }
     }
 }
 
 publishScript {
     releaseRepository("TeamVoided", "https://maven.teamvoided.org/releases")
-    publication(modSettings.modId(), false)
-    publishSources(true)
+    publication(iridium.modId, isSnapshot = false)
+    publishSources = true
 }
 
-uploadConfig {
+uploadScript {
     debugMode = false
+
     modrinthId = "YmyITJku"
     curseId = "891370"
 
-    changeLog = File("changelog.md").readText()
+    changelog = projectDir.resolve("changelog.md").readText()
 
-    // FabricApi
-    modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
-    curseDependency("fabric-api", uploadConfig.REQUIRED)
-    // Fabric Language Kotlin
-    modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
-    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
+    version += libs.versions.minecraft.get()
+    versionName = "${iridium.modName()} ${iridium.modVersion}"
+    jarTask = tasks.jar.get()
+
+    dependency("P7dR8mSH", "fabric-api")
+    dependency("Ha28R6CL", "fabric-language-kotlin")
+//    dependency("hYykXjDp", "fzzy-config")
 }
